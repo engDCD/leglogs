@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:leglogs/Modules/Common/Service/settings_service.dart';
+import 'package:leglogs/Modules/Home/home_view.dart';
+import 'package:leglogs/Modules/pages.dart';
 
-void main() {
+void main() async {
+  await initServices();
   runApp(const MyApp());
+}
+
+Future<void> initServices() async {
+  await Get.putAsync(() => SettingsService().init());
 }
 
 class MyApp extends StatelessWidget {
@@ -10,8 +18,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const GetMaterialApp(
-      title: 'Leglogs App'
+    return GetMaterialApp(
+      title: 'Leglogs App',
+      getPages: Pages.data,
+      initialRoute: HomeView.routeName,
     ); 
   }
 }
