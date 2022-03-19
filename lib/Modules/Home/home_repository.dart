@@ -7,9 +7,9 @@ import 'package:leglogs/Modules/Common/Repository/base_repository.dart';
 class HomeRepository extends BricksetBaseRepository {
   static HomeRepository to = Get.find();
 
-  Future<BricksetSetCollection> getNewReleasesSets() async {
-    var resp = await client.get(
-        'https://brickset.com/api/v3.asmx/getSets?params={\'year\':\'2020\', pageSize:10}');
+  Future<BricksetSetCollection> getUserSets() async {
+    var resp = await client
+        .get('https://brickset.com/api/v3.asmx/getSets?params={\'owned\':1}');
     return BricksetSetCollection.fromJson(json.decode(resp.data));
   }
 }

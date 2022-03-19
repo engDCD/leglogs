@@ -7,7 +7,7 @@ part 'brickset_set_collection.g.dart';
 class BricksetSetCollection {
   final String status;
   final int matches;
-  final List<BricksetSet> sets;
+  final List<BricksetSet>? sets;
 
   BricksetSetCollection({
     required this.status,

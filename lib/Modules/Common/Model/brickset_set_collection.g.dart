@@ -11,8 +11,8 @@ BricksetSetCollection _$BricksetSetCollectionFromJson(
     BricksetSetCollection(
       status: json['status'] as String,
       matches: json['matches'] as int,
-      sets: (json['sets'] as List<dynamic>)
-          .map((e) => BricksetSet.fromJson(e as Map<String, dynamic>))
+      sets: (json['sets'] as List<dynamic>?)
+          ?.map((e) => BricksetSet.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 

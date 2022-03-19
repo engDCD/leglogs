@@ -7,9 +7,9 @@ class HomeController extends GetxController
   Future<void> loadThemes() async {
     change(null, status: RxStatus.loading());
 
-    var data = await HomeRepository.to.getNewReleasesSets();
+    var data = await HomeRepository.to.getUserSets();
 
-    for (final set in data.sets) {
+    for (final set in data.sets ?? []) {
       await set.loadfromImage(set.image.imageURL);
     }
 

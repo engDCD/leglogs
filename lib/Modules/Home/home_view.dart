@@ -1,9 +1,11 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:leglogs/Modules/Home/home_controller.dart';
 import 'package:leglogs/Modules/Home/home_repository.dart';
 import 'package:leglogs/Widgets/set_card.dart';
+import 'package:leglogs/Widgets/set_collection_summary_bar.dart';
 
 class HomeView extends GetView<HomeController> {
   static String routeName = '/';
@@ -24,17 +26,41 @@ class HomeView extends GetView<HomeController> {
 
     return Scaffold(
       body: controller.obx(
-        (newReleases) => CarouselSlider(
-          items: newReleases?.sets
-              .map(
-                (set) => SetCard(
-                  set: set,
+        (setData) => SafeArea(
+          child: CustomScrollView(
+            slivers: [
+              SliverAppBar(
+                expandedHeight: context.width * 450 / 768,
+                pinned: true,
+                flexibleSpace: FlexibleSpaceBar(
+                  titlePadding: const EdgeInsets.symmetric(vertical: 4),
+                  title: SetCollectionSummaryBar(setCollection: setData!),
+                  background: Container(
+                    color: Colors.white,
+                    child: CarouselSlider(
+                      items: setData.sets
+                          ?.map(
+                            (set) => SetCard(
+                              set: set,
+                            ),
+                          )
+                          .toList(),
+                      options: CarouselOptions(
+                        autoPlay: false,
+                      ),
+                    ),
+                  ),
                 ),
-              )
-              .toList(),
-          options: CarouselOptions(height: 400.0),
+              ),
+              const SliverFillRemaining(),
+            ],
+          ),
         ),
-        onLoading: const CircularProgressIndicator(),
+        onLoading: const Center(
+          child: SpinKitSquareCircle(
+            color: Colors.red,
+          ),
+        ),
         onEmpty: const Text('No data found'),
         onError: (error) => Text(error ?? 'Generic Error'),
       ),

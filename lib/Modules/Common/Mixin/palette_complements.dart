@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:json_annotation/json_annotation.dart';
 import 'package:palette_generator/palette_generator.dart';
 
 mixin PaletteComplement {
+  @JsonKey(ignore: true)
   PaletteGenerator? palette;
 
   bool isDarkColor(Color refColor) {
