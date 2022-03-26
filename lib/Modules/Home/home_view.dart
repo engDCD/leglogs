@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:leglogs/Modules/Home/home_controller.dart';
 import 'package:leglogs/Modules/Home/home_repository.dart';
+import 'package:leglogs/Widgets/chart_bytheme.dart';
+import 'package:leglogs/Widgets/chart_bytheme_pieces.dart';
 import 'package:leglogs/Widgets/set_card.dart';
 import 'package:leglogs/Widgets/set_collection_summary_bar.dart';
 
@@ -29,30 +31,45 @@ class HomeView extends GetView<HomeController> {
         (setData) => SafeArea(
           child: CustomScrollView(
             slivers: [
-              SliverAppBar(
-                expandedHeight: context.width * 450 / 768,
-                pinned: true,
-                flexibleSpace: FlexibleSpaceBar(
-                  titlePadding: const EdgeInsets.symmetric(vertical: 4),
-                  title: SetCollectionSummaryBar(setCollection: setData!),
-                  background: Container(
-                    color: Colors.white,
-                    child: CarouselSlider(
-                      items: setData.sets
-                          ?.map(
-                            (set) => SetCard(
-                              set: set,
-                            ),
-                          )
-                          .toList(),
-                      options: CarouselOptions(
-                        autoPlay: false,
+              SliverLayoutBuilder(
+                builder: (context, constraints) {
+                  print(constraints.scrollOffset.toString());
+                  return SliverAppBar(
+                    backgroundColor: constraints.scrollOffset == 0
+                        ? Colors.black38
+                        : Colors.transparent,
+                    expandedHeight: context.width * 450 / 768,
+                    pinned: true,
+                    flexibleSpace: FlexibleSpaceBar(
+                      titlePadding: const EdgeInsets.symmetric(vertical: 4),
+                      title: SetCollectionSummaryBar(setCollection: setData!),
+                      background: Container(
+                        color: Colors.white,
+                        child: CarouselSlider(
+                          items: setData.sets
+                              ?.map(
+                                (set) => SetCard(
+                                  set: set,
+                                ),
+                              )
+                              .toList(),
+                          options: CarouselOptions(
+                            autoPlay: true,
+                          ),
+                        ),
                       ),
                     ),
-                  ),
+                  );
+                },
+              ),
+              SliverFillRemaining(
+                child: PageView(
+                  children: [
+                    ChartByTheme.fromCollection(collection: setData!),
+                    ChartByThemeXPieces.fromCollection(collection: setData),
+                  ],
                 ),
               ),
-              const SliverFillRemaining(),
             ],
           ),
         ),
