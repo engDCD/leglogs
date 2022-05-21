@@ -22,6 +22,6 @@ class MyApp extends StatelessWidget {
       title: 'Leglogs App',
       getPages: Pages.data,
       initialRoute: HomeView.routeName,
-    ); 
+    );
   }
 }

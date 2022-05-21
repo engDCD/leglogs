@@ -33,7 +33,6 @@ class HomeView extends GetView<HomeController> {
             slivers: [
               SliverLayoutBuilder(
                 builder: (context, constraints) {
-                  print(constraints.scrollOffset.toString());
                   return SliverAppBar(
                     backgroundColor: constraints.scrollOffset == 0
                         ? Colors.black38
